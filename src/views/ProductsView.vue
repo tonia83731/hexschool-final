@@ -1,5 +1,8 @@
 <template>
   <!-- <h1>This is products page</h1> -->
+  <div class="text-end">
+    <button class="btn btn-vintage-l-green" type="button" @click="openModal(true)">增加一個產品</button>
+  </div>
   <table class="table mt-4">
     <thead>
       <tr>
@@ -20,20 +23,28 @@
         <td class="text-success" v-if="item.is_enabled">啟用</td>
         <td class="text-muted" v-else>未啟用</td>
         <td>
-          <button type="button" class="btn btn-outline-primary btn-sm">編輯</button>
-          <button type="button" class="btn btn-outline-danger btn-sm ms-2">刪除</button>
+          <button type="button" class="btn btn-border-vintage-tiffany btn-sm" @click="openModal(false, item)">編輯</button>
+          <button type="button" class="btn btn-border-vintage-red btn-sm ms-2">刪除</button>
         </td>
       </tr>
     </tbody>
   </table>
+  <ProductModal ref="productModal" :product="tempProduct" @update-product="updateProduct"></ProductModal>
 </template>
 <script>
+import ProductModal from '@/components/ProductModal.vue'
+
 export default {
   data () {
     return {
       products: [],
-      pagination: {}
+      pagination: {},
+      tempProduct: {},
+      isNew: false
     }
+  },
+  components: {
+    ProductModal
   },
   methods: {
     getProducts () {
@@ -43,11 +54,40 @@ export default {
         .then((res) => {
           // console.log(res)
           if (res.data.success) {
-            console.log(res.data)
+            // console.log(res.data)
             this.products = res.data.products
             this.pagination = res.data.pagination
           }
         })
+    },
+    openModal (isNew, item) {
+      console.log(isNew, item)
+      if (isNew) {
+        this.tempProduct = {}
+      } else {
+        this.tempProduct = { ...item }
+      }
+      this.isNew = isNew
+      const productComponent = this.$refs.productModal
+      productComponent.showModal()
+    },
+    updateProduct (item) {
+      // console.log(item)
+      this.tempProduct = item
+      // 新增狀態
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`
+      let httpMethod = 'post'
+      // 編輯狀態
+      if (!this.isNew) {
+        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
+        httpMethod = 'put'
+      }
+      const productComponent = this.$refs.productModal
+      this.$http[httpMethod](api, { data: this.tempProduct }).then((res) => {
+        // console.log(res)
+        productComponent.hideModal()
+        this.getProducts()
+      })
     }
   },
   created () {

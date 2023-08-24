@@ -1,25 +1,23 @@
 <template>
   <!-- <h1>This is login page</h1> -->
-  <div class="container mt-5">
+  <div class="container">
     <form
       class="row d-flex justify-content-center align-items-center"
       @submit.prevent="signIn">
       <div class="col-md-6">
-        <h1 class="h3 mb-4 font-weight-bold text-center">請先登入</h1>
-        <div class="mb-3">
-          <label for="inputEmail" class="sr-only">Email</label>
+        <h1 class="h3 mb-4 text-center vintage-d-green fw-bold">後台登入</h1>
+        <div class="form-floating mb-3">
           <input
             type="email"
-            id="inputEmail"
             class="form-control"
+            id="inputEmail"
             placeholder="Please enter email address..."
             required
             autofocus
-            v-model="user.username"
-            />
+            v-model="user.username">
+          <label for="inputEmail">Email address</label>
         </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="sr-only">Password</label>
+        <div class="form-floating">
           <input
             type="password"
             id="inputPassword"
@@ -27,11 +25,11 @@
             placeholder="Please enter password..."
             required
             autofocus
-            v-model="user.password"
-            />
+            v-model="user.password">
+          <label for="inputPassword">Password</label>
         </div>
         <div class="text-end mt-4">
-          <button type="submit" class="btn btn-primary btn-block">登入</button>
+          <button type="submit" class="btn btn-vintage-l-green btn-block">登入</button>
         </div>
       </div>
     </form>

@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg header-customized">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar w/ text</a>
+        <a class="navbar-brand text-light font-lobster fs-2" href="#">Vintage</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,31 +13,13 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Features</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" @click.prevent="logOut">登出</a>
-            </li>
           </ul>
-          <span class="navbar-text">
-            Navbar text with an inline element
-          </span>
         </div>
       </div>
     </nav>
 </template>
 <script>
 export default {
-  methods: {
-    logOut () {
-      const api = `${process.env.VUE_APP_API}/logout`
-      // console.log(api)
-      this.$http.post(api, this.user)
-        .then((res) => {
-          // console.log(res)
-          if (res.data.success) {
-            this.$router.push('/login')
-          }
-        })
-    }
-  }
+  methods: {}
 }
 </script>
