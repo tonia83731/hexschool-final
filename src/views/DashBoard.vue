@@ -14,10 +14,18 @@
 </template>
 
 <script>
+import emitter from '@/methods/emitter'
+import ToastMessages from '@/components/ToastMessages.vue'
 import Navbar from '../components/NavBar.vue'
 export default {
   components: {
-    Navbar
+    // eslint-disable-next-line vue/no-unused-components
+    Navbar, ToastMessages
+  },
+  provide () {
+    return {
+      emitter
+    }
   },
   methods: {
     logOut () {
